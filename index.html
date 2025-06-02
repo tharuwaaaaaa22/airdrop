@@ -1,4 +1,4 @@
-
+<!-- File: index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +6,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="styles.css">
   <title>Airdrop UI</title>
+  <style>
+    .withdraw-button {
+      display: block;
+      width: 80%;
+      margin: 15px auto;
+      padding: 16px 0;
+      font-size: 1.2rem;
+      background-color: #ffd700;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    #withdrawForm {
+      margin-top: 15px;
+    }
+    #withdrawForm input {
+      padding: 10px;
+      width: 80%;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+    #withdrawForm button {
+      margin-top: 10px;
+      background: #ffd700;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <div class="dashboard">
@@ -29,13 +62,15 @@
     </div>
 
     <div id="section-withdraw" class="tab-section" style="display:none;">
-      <h2>Withdraw</h2>
+      <h2 style="color:#ffd700;">WITHDRAW</h2>
       <p><strong>Your Points:</strong> <span id="totalPoints">Loading...</span></p>
-      <p><strong>Rates:</strong> 1000 = $1, 3000 = $3, 5000 = $5</p>
-      <button onclick="requestWithdraw(1)">Withdraw $1</button>
-      <button onclick="requestWithdraw(3)">Withdraw $3</button>
-      <button onclick="requestWithdraw(5)">Withdraw $5</button>
-      <div id="withdrawForm" style="display:none; margin-top: 10px;">
+      <p style="color: white;">Rates: <span style="color: #ffd700;">1$ = 1000 Points</span></p>
+
+      <button class="withdraw-button" onclick="requestWithdraw(1)">Withdraw $1</button>
+      <button class="withdraw-button" onclick="requestWithdraw(3)">Withdraw $3</button>
+      <button class="withdraw-button" onclick="requestWithdraw(5)">Withdraw $5</button>
+
+      <div id="withdrawForm" style="display:none;">
         <p>Enter your Binance Email or UID:</p>
         <input type="text" id="binanceInput" placeholder="Binance Email or UID" />
         <button onclick="submitWithdraw()">Submit Withdraw Request</button>
