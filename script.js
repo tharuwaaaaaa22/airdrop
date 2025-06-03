@@ -61,14 +61,16 @@ setTimeout(() => {
 document.querySelectorAll(".task button").forEach((btn, index) => {
   btn.addEventListener("click", () => {
     if (index < 3) {
-      const adLink = `https://solid-bedecked-walrus.glitch.me/go?uid=${uid}&task=task${index+1}`;
-      const a = document.createElement('a');
-      a.href = adLink;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      document.body.appendChild(a);
+      // Immediately open the link in new tab
+      const link = `https://solid-bedecked-walrus.glitch.me/go?uid=${uid}&task=task${index+1}`;
+      const a = document.createElement("a");
+      a.href = link;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
       a.click();
-      document.body.removeChild(a);
+
+      // Optional: track click (AFTER opening)
+      console.log(`Ad click recorded for task ${index + 1}`);
     } else {
       const referralLink = `${window.location.origin}?ref=${uid}`;
       navigator.clipboard.writeText(referralLink).then(() => {
