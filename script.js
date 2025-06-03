@@ -1,3 +1,4 @@
+
 console.log('Script loaded');
 
 // ✅ Auto-generate UID if not present
@@ -30,30 +31,24 @@ function submitWithdraw() {
   fetch("https://solid-bedecked-walrus.glitch.me/withdraw", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ uid, amount: selectedAmount, address: binance })  // ✅ FIXED: 'binance' key changed to 'address'
+    body: JSON.stringify({ uid, amount: selectedAmount, binance })
   })
-  .then(res => res.json())  // ✅ Changed to JSON to show status
+  .then(res => res.text())
   .then(msg => {
-    if (msg.status === "success") {
-      document.getElementById("withdrawStatus").innerText = "✅ Withdrawal request submitted!";
-    } else {
-      document.getElementById("withdrawStatus").innerText = "❌ " + (msg.message || "Error");
-    }
+    document.getElementById("withdrawStatus").innerText = msg;
     loadPoints();
-  })
-  .catch(() => {
-    document.getElementById("withdrawStatus").innerText = "❌ Network error!";
   });
 }
 
+// ✅ Tab switching logic
 function showTab(tab) {
   document.getElementById("section-tasks").style.display = "none";
   document.getElementById("section-bot").style.display = "none";
   document.getElementById("section-withdraw").style.display = "none";
-
   document.getElementById("section-" + tab).style.display = "block";
 }
 
+// ✅ Update user points after 1s
 setTimeout(() => {
   fetch(`https://solid-bedecked-walrus.glitch.me/points?uid=${uid}`)
     .then(res => res.text())
@@ -62,34 +57,23 @@ setTimeout(() => {
     });
 }, 1000);
 
-// ✅ FIX: Add event listeners *after* DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".task button").forEach((btn, index) => {
-    btn.addEventListener("click", () => {
-      if (index < 3) {
-        const url = `https://solid-bedecked-walrus.glitch.me/go?uid=${uid}&task=task${index+1}`;
-        
-        // 👇 Fix: use direct link open here
-        const adLink = `https://solid-bedecked-walrus.glitch.me/go?uid=${uid}&task=task${index+1}`;
-        const a = document.createElement('a');
-        a.href = adLink;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-
-        // ✅ Fallback alert if popup blocked
-        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-          alert("Please allow popups or disable Brave Shields for this site.");
-        }
-      } else {
-        const referralLink = `${window.location.origin}?ref=${uid}`;
-        navigator.clipboard.writeText(referralLink).then(() => {
-          alert("Referral link copied! Share in groups to earn.");
-        });
-      }
-    });
+// ✅ Task button handlers
+document.querySelectorAll(".task button").forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    if (index < 3) {
+      const adLink = `https://solid-bedecked-walrus.glitch.me/go?uid=${uid}&task=task${index+1}`;
+      const a = document.createElement('a');
+      a.href = adLink;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      const referralLink = `${window.location.origin}?ref=${uid}`;
+      navigator.clipboard.writeText(referralLink).then(() => {
+        alert("Referral link copied! Share in groups to earn.");
+      });
+    }
   });
 });
