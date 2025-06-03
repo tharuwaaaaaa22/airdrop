@@ -67,11 +67,16 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".task button").forEach((btn, index) => {
     btn.addEventListener("click", () => {
       if (index < 3) {
-        // Task buttons 0,1,2 are Watch Ads
         const url = `https://solid-bedecked-walrus.glitch.me/go?uid=${uid}&task=task${index+1}`;
-        window.open(url, "_blank"); // ✅ FIXED: open in new tab so ad opens correctly
+        
+        // 👇 Fix: use direct link open here
+        const newWindow = window.open(url, "_blank");
+
+        // ✅ Fallback alert if popup blocked
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+          alert("Please allow popups or disable Brave Shields for this site.");
+        }
       } else {
-        // Share & Earn (index 3)
         const referralLink = `${window.location.origin}?ref=${uid}`;
         navigator.clipboard.writeText(referralLink).then(() => {
           alert("Referral link copied! Share in groups to earn.");
