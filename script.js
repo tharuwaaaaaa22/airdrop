@@ -32,11 +32,11 @@ function submitWithdraw() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ uid, amount: selectedAmount, binance })
   })
-  .then(res => res.text())
-  .then(msg => {
-    document.getElementById("withdrawStatus").innerText = msg;
-    loadPoints();
-  });
+    .then(res => res.text())
+    .then(msg => {
+      document.getElementById("withdrawStatus").innerText = msg;
+      loadPoints();
+    });
 }
 
 function showTab(tab) {
@@ -55,23 +55,27 @@ setTimeout(() => {
     });
 }, 1000);
 
-// ✅ Updated Task buttons
+// ✅ Updated Task buttons with working Ad & Tracking
 document.querySelectorAll(".task button").forEach((btn, index) => {
-  btn.addEventListener("click", async () => {
+  btn.addEventListener("click", () => {
     if (index < 3) {
-      const adLinks = [
-        "https://eminentcleaveproduces.com/iazf10b6e?key=a4310e34201efab95887ed33dac431e3",
-        "https://eminentcleaveproduces.com/weuyspet?key=23520775c9e3e64f6e23c2d35cb98846",
-        "https://eminentcleaveproduces.com/v87w7knk3?key=51ea037a331728f325991ab5e5b59ef4"
-      ];
-      const randomAd = adLinks[Math.floor(Math.random() * adLinks.length)];
+      const win = window.open("", "_blank"); // open new tab immediately
 
-      // First track the click
-      await fetch(`https://solid-bedecked-walrus.glitch.me/track?uid=${uid}&task=task${index+1}`);
-
-      // Then open the ad
-      const win = window.open(randomAd, "_blank");
-      if (!win) alert("Please allow popups to watch ads.");
+      fetch(`https://solid-bedecked-walrus.glitch.me/track?uid=${uid}&task=task${index + 1}`)
+        .then(() => {
+          // Open Adsterra link after tracking
+          const adLinks = [
+            "https://eminentcleaveproduces.com/iazf10b6e?key=a4310e34201efab95887ed33dac431e3",
+            "https://eminentcleaveproduces.com/weuyspet?key=23520775c9e3e64f6e23c2d35cb98846",
+            "https://eminentcleaveproduces.com/v87w7knk3?key=51ea037a331728f325991ab5e5b59ef4"
+          ];
+          const randomAd = adLinks[Math.floor(Math.random() * adLinks.length)];
+          win.location.href = randomAd;
+        })
+        .catch(() => {
+          win.close();
+          alert("Failed to track your click.");
+        });
     } else {
       const referralLink = `${window.location.origin}?ref=${uid}`;
       navigator.clipboard.writeText(referralLink).then(() => {
