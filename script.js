@@ -9,7 +9,7 @@ if (!uid) {
 
 // ✅ Load total points
 function loadPoints() {
-  fetch(`https://solid-bedecked-walrus.glitch.me/points?uid=${uid}`)
+  fetch(`https://airdrop-backend-bygj.onrender.com/points?uid=${uid}`)
     .then(res => res.text())
     .then(data => {
       document.getElementById("totalPoints").innerText = data + " pts";
@@ -27,7 +27,7 @@ function requestWithdraw(amount) {
 
 function submitWithdraw() {
   const binance = document.getElementById("binanceInput").value;
-  fetch("https://solid-bedecked-walrus.glitch.me/withdraw", {
+  fetch("https://airdrop-backend-bygj.onrender.com/withdraw", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ uid, amount: selectedAmount, binance })
@@ -49,7 +49,7 @@ function showTab(tab) {
 
 // ✅ Points display
 setTimeout(() => {
-  fetch(`https://solid-bedecked-walrus.glitch.me/points?uid=${uid}`)
+  fetch(`https://airdrop-backend-bygj.onrender.com/points?uid=${uid}`)
     .then(res => res.text())
     .then(data => {
       document.getElementById("userPoints").innerText = data;
@@ -79,7 +79,7 @@ document.querySelectorAll(".task button").forEach((btn, index) => {
       a.remove();
 
       // Track click to backend
-      fetch(`https://solid-bedecked-walrus.glitch.me/go?uid=${uid}&task=task${index + 1}`);
+      fetch(`https://airdrop-backend-bygj.onrender.com/go?uid=${uid}&task=task${index + 1}`);
     } else {
       const referralLink = `${window.location.origin}?ref=${uid}`;
       navigator.clipboard.writeText(referralLink).then(() => {
