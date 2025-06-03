@@ -1,0 +1,90 @@
+<!-- File: index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="styles.css">
+  <title>Airdrop UI</title>
+  <style>
+    .withdraw-button {
+      display: block;
+      width: 80%;
+      margin: 15px auto;
+      padding: 16px 0;
+      font-size: 1.2rem;
+      background-color: #ffd700;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    #withdrawForm {
+      margin-top: 15px;
+    }
+    #withdrawForm input {
+      padding: 10px;
+      width: 80%;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+    #withdrawForm button {
+      margin-top: 10px;
+      background: #ffd700;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <div id="section-tasks" class="tab-section">
+      <h1>DASHBOARD</h1>
+      <p id="userPoints">0 Points</p>
+      <img src="usdt-removebg-preview_upscaled.png" alt="USDT Logo" style="width: 120px; border-radius: 50%;" />
+      <h2>Tasks</h2>
+      <div class="tasks">
+        <div class="task"><span>Watch Ads & Earn Points (0/10)</span><button>Watch & Earn</button></div>
+        <div class="task"><span>Watch Ads & Earn Points (0/10)</span><button>Watch & Earn</button></div>
+        <div class="task"><span>Watch Ads & Earn Points (0/10)</span><button>Watch & Earn</button></div>
+        <div class="task"><span>Invite Friends & Earn 5 Points</span><button>Share & Earn</button></div>
+      </div>
+    </div>
+
+    <div id="section-bot" class="tab-section" style="display:none;">
+      <h2>How it works?</h2>
+      <p>You can earn 2 points per ad. There are 30 ad slots daily, divided into 3 tasks (10 ads each). Your referrals will only be valid after they watch at least 1 ad. You will get 5 points per successful referral.</p>
+      <p>Check back every 6 hours for task resets and complete to earn more!</p>
+    </div>
+
+    <div id="section-withdraw" class="tab-section" style="display:none;">
+      <h2 style="color:#ffd700;">WITHDRAW</h2>
+      <p><strong>Your Points:</strong> <span id="totalPoints">Loading...</span></p>
+      <p style="color: white;">Rates: <span style="color: #ffd700;">1$ = 1000 Points</span></p>
+
+      <button class="withdraw-button" onclick="requestWithdraw(1)">Withdraw $1</button>
+      <button class="withdraw-button" onclick="requestWithdraw(3)">Withdraw $3</button>
+      <button class="withdraw-button" onclick="requestWithdraw(5)">Withdraw $5</button>
+
+      <div id="withdrawForm" style="display:none;">
+        <p>Enter your Binance Email or UID:</p>
+        <input type="text" id="binanceInput" placeholder="Binance Email or UID" />
+        <button onclick="submitWithdraw()">Submit Withdraw Request</button>
+      </div>
+      <p id="withdrawStatus" style="margin-top: 10px;"></p>
+    </div>
+  </div>
+
+  <div class="navbar" style="display: flex; justify-content: space-around; padding: 10px 0;">
+    <div onclick="showTab('tasks')" class="nav-btn"><img src="task-svgrepo-com_gold.svg" /><p>Tasks</p></div>
+    <div onclick="showTab('bot')" class="nav-btn"><img src="bot-svgrepo-com_gold.svg" /><p>Airdrop bot</p></div>
+    <div onclick="showTab('withdraw')" class="nav-btn"><img src="money-svgrepo-com.svg" /><p>Withdraw</p></div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
