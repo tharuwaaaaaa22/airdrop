@@ -30,7 +30,7 @@ function submitWithdraw() {
   fetch("https://solid-bedecked-walrus.glitch.me/withdraw", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ uid, amount: selectedAmount, address: binance })
+    body: JSON.stringify({ uid, amount: selectedAmount, binance })
   })
   .then(res => res.text())
   .then(msg => {
@@ -55,27 +55,23 @@ setTimeout(() => {
     });
 }, 1000);
 
-// ✅ Adsterra direct links
-const adLinks = [
-  "https://eminentcleaveproduces.com/iazf10b6e?key=a4310e34201efab95887ed33dac431e3",
-  "https://eminentcleaveproduces.com/weuyspet?key=23520775c9e3e64f6e23c2d35cb98846",
-  "https://eminentcleaveproduces.com/v87w7knk3?key=51ea037a331728f325991ab5e5b59ef4"
-];
-
-// ✅ Watch Ad + Referral Button Clicks
+// ✅ Updated Task buttons
 document.querySelectorAll(".task button").forEach((btn, index) => {
-  btn.addEventListener("click", () => {
+  btn.addEventListener("click", async () => {
     if (index < 3) {
+      const adLinks = [
+        "https://eminentcleaveproduces.com/iazf10b6e?key=a4310e34201efab95887ed33dac431e3",
+        "https://eminentcleaveproduces.com/weuyspet?key=23520775c9e3e64f6e23c2d35cb98846",
+        "https://eminentcleaveproduces.com/v87w7knk3?key=51ea037a331728f325991ab5e5b59ef4"
+      ];
       const randomAd = adLinks[Math.floor(Math.random() * adLinks.length)];
-      const win = window.open(randomAd, "_blank");
-      if (win) {
-        win.focus();
-      } else {
-        alert("Please allow popups for this site.");
-      }
 
-      // Track ad click via backend
-      fetch(`https://solid-bedecked-walrus.glitch.me/track?uid=${uid}&task=task${index + 1}`);
+      // First track the click
+      await fetch(`https://solid-bedecked-walrus.glitch.me/track?uid=${uid}&task=task${index+1}`);
+
+      // Then open the ad
+      const win = window.open(randomAd, "_blank");
+      if (!win) alert("Please allow popups to watch ads.");
     } else {
       const referralLink = `${window.location.origin}?ref=${uid}`;
       navigator.clipboard.writeText(referralLink).then(() => {
