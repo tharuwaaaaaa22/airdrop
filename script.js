@@ -70,7 +70,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const url = `https://solid-bedecked-walrus.glitch.me/go?uid=${uid}&task=task${index+1}`;
         
         // 👇 Fix: use direct link open here
-        const newWindow = window.open(url, "_blank");
+        const adLink = `https://solid-bedecked-walrus.glitch.me/go?uid=${uid}&task=task${index+1}`;
+        const a = document.createElement('a');
+        a.href = adLink;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
 
         // ✅ Fallback alert if popup blocked
         if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
