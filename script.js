@@ -30,7 +30,7 @@ function submitWithdraw() {
   fetch("https://airdrop-backend-bygj.onrender.com/withdraw", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ uid, amount: selectedAmount, binance })
+    body: JSON.stringify({ uid, amount: selectedAmount, address: binance })
   })
   .then(res => res.text())
   .then(msg => {
